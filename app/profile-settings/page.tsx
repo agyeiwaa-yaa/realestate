@@ -6,6 +6,7 @@ import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
 import { Select } from "@/components/ui/select"
 import { toast } from 'sonner'
+import { ProfileSidebar } from '@/components/ProfileSidebar'
 
 // Mock user data
 const user = {
@@ -32,8 +33,9 @@ export default function ProfileSettingsPage() {
   }
 
   return (
-    <div className="bg-orange-50 min-h-screen py-16">
-      <div className="container mx-auto px-4">
+    <div className="bg-orange-50 min-h-screen">
+      <ProfileSidebar />
+      <div className="ml-16 md:ml-64 p-8">
         <div className="max-w-2xl mx-auto bg-white rounded-lg shadow-md overflow-hidden">
           <div className="bg-gradient-to-r from-orange-500 to-pink-600 p-6">
             <h1 className="text-3xl font-bold text-white">Profile Settings</h1>
