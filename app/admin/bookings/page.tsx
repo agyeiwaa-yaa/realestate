@@ -10,7 +10,7 @@ interface BookTourPageProps {
   propertyId: string;
 }
 
-export default function BookTourPage({ propertyId }: BookTourPageProps) {  
+const BookTourPage: React.FC<BookTourPageProps> = ({ propertyId }) => {
   const router = useRouter()
   const [formData, setFormData] = useState({
     date: '',
@@ -24,7 +24,7 @@ export default function BookTourPage({ propertyId }: BookTourPageProps) {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
     // Here you would typically send the booking request to your backend
-    console.log('Booking submitted:', { ...formData, propertyId:propertyId })
+    console.log('Booking submitted:', { ...formData, propertyId })
     toast.success('Tour booking request submitted successfully!')
     // Redirect to bookings page
     router.push('/bookings')
@@ -74,3 +74,4 @@ export default function BookTourPage({ propertyId }: BookTourPageProps) {
   )
 }
 
+export default BookTourPage
