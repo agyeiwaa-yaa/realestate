@@ -107,7 +107,7 @@ export default function ProfileSettingsPage() {
               {formData.role === 1 && (
                 <div>
                   <label htmlFor="adminSettings" className="block text-sm font-medium text-gray-700">Admin Settings</label>
-                  <Select
+                  {/* <Select
                     id="adminSettings"
                     name="adminSettings"
                     className="mt-1"
@@ -115,7 +115,7 @@ export default function ProfileSettingsPage() {
                     <option value="option1">Option 1</option>
                     <option value="option2">Option 2</option>
                     <option value="option3">Option 3</option>
-                  </Select>
+                  </Select> */}
                 </div>
               )}
               <Button type="submit" className="w-full bg-orange-500 hover:bg-orange-600 text-white font-bold py-2 px-4 rounded-full text-lg">

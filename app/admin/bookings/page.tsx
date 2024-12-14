@@ -6,7 +6,11 @@ import { Input } from "@/components/ui/input"
 import { toast } from 'sonner'
 import { useRouter } from 'next/navigation'
 
-export default function BookTourPage({ params }: { params: { propertyId: string } }) {
+interface BookTourPageProps {
+  propertyId: string;
+}
+
+export default function BookTourPage({ propertyId }: BookTourPageProps) {  
   const router = useRouter()
   const [formData, setFormData] = useState({
     date: '',
@@ -20,7 +24,7 @@ export default function BookTourPage({ params }: { params: { propertyId: string 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
     // Here you would typically send the booking request to your backend
-    console.log('Booking submitted:', { ...formData, propertyId: params.propertyId })
+    console.log('Booking submitted:', { ...formData, propertyId:propertyId })
     toast.success('Tour booking request submitted successfully!')
     // Redirect to bookings page
     router.push('/bookings')
