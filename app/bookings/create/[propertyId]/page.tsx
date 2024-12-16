@@ -78,8 +78,3 @@ export default function BookTourPage({ params }: PageProps) {
   )
 }
 
-// Optional: Add metadata for the page
-export const metadata: Metadata = {
-  title: 'Book a Tour',
-  description: 'Schedule a property tour'
-}
