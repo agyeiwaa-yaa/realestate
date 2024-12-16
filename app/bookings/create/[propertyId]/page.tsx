@@ -6,13 +6,8 @@ import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { toast } from 'sonner'
 
-type PageProps = {
-  params: {
-    propertyId: string
-  }
-}
-
-export default function BookTourPage({ params }: PageProps) {
+export default async function BookTourPage(props: { params: Promise<{ propertyId: string }> }) {
+  const params = await props.params;
   const router = useRouter()
   const [formData, setFormData] = useState({
     date: '',

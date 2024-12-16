@@ -6,14 +6,9 @@ import { Input } from "@/components/ui/input"
 import { toast } from 'sonner'
 import Image from 'next/image'
 
-type PageProps = {
-  params: {
-    propertyId: string
-    reviewId: string
-  }
-}
+export default async function PaymentPage(props: { params: Promise<{ id: string }> }) {
+  const params = await props.params;
 
-export default function PaymentPage({ params }: PageProps) {
   const [formData, setFormData] = useState({
     fullName: '',
     email: '',

@@ -23,7 +23,8 @@ type PageProps = {
   }
 }
 
-export default function BuyPropertyPage({ params }: PageProps) {
+export default async function BuyPropertyPage(props: { params: Promise<{ id: string }> }) {
+  const params = await props.params;
   const router = useRouter()
   const [formData, setFormData] = useState({
     fullName: '',

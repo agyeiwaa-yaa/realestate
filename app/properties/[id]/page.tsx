@@ -27,13 +27,9 @@ const property = {
   ]
 }
 
-type PageProps = {
-  params: {
-    propertyId: string
-  }
-}
+export default async function PropertyPage(props: { params: Promise<{ id: string }> }) {
+  const params = await props.params;
 
-export default function EditPropertyPage({ params }: PageProps) {
   const [isFavorite, setIsFavorite] = useState(false)
 
   const toggleFavorite = () => {
