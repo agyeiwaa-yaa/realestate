@@ -5,8 +5,16 @@ import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { toast } from 'sonner'
 import { useRouter } from 'next/navigation'
+import { Metadata } from 'next'
 
-export default function BookTourPage({ params }: { params: { propertyId: string } }) {
+// Define the props type correctly for Next.js page components
+interface PageProps {
+  params: {
+    propertyId: string
+  }
+}
+
+export default function BookTourPage({ params }: PageProps) {
   const router = useRouter()
   const [formData, setFormData] = useState({
     date: '',
@@ -70,3 +78,8 @@ export default function BookTourPage({ params }: { params: { propertyId: string 
   )
 }
 
+// Optional: Add metadata for the page
+export const metadata: Metadata = {
+  title: 'Book a Tour',
+  description: 'Schedule a property tour'
+}
