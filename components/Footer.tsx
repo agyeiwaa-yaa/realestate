@@ -61,7 +61,7 @@ export function Footer() {
         </div>
         <div className="mt-8 pt-8 border-t border-gray-200">
           <div className="flex justify-between items-center">
-            <p>&copy; 2023 Actual Real Estate. All rights reserved.</p>
+            <p>&copy; 2024 Homesphere. All rights reserved.</p>
             <div className="flex space-x-4">
               <a href="#" className="text-gray-600 hover:text-orange-500"><Facebook size={20} /></a>
               <a href="#" className="text-gray-600 hover:text-orange-500"><Twitter size={20} /></a>
