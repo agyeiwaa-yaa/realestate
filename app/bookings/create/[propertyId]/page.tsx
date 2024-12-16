@@ -6,13 +6,12 @@ import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { toast } from 'sonner'
 
-type BookTourPageProps = {
-  params: {
-    propertyId: string
-  }
+export interface PageProps {
+  params: { propertyId: string }
+  searchParams: { [key: string]: string | string[] | undefined }
 }
 
-export default function BookTourPage({ params }: BookTourPageProps) {
+export default function BookTourPage({ params, searchParams }: PageProps) {
   const router = useRouter()
   const [formData, setFormData] = useState({
     date: '',
@@ -31,7 +30,10 @@ export default function BookTourPage({ params }: BookTourPageProps) {
     
     try {
       // Here you would typically send the booking request to your backend
-      console.log('Booking submitted:', { ...formData, propertyId: params.propertyId })
+      console.log('Booking submitted:', { 
+        ...formData, 
+        propertyId: params.propertyId 
+      })
       
       // Simulating an async operation
       // await submitBooking({ ...formData, propertyId: params.propertyId })
