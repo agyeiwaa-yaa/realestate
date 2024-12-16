@@ -1,20 +1,18 @@
 'use client'
 
 import { useState } from 'react'
+import { useRouter } from 'next/navigation'
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { toast } from 'sonner'
-import { useRouter } from 'next/navigation'
-import { Metadata } from 'next'
 
-// Define the props type correctly for Next.js page components
-interface PageProps {
+type BookTourPageProps = {
   params: {
     propertyId: string
   }
 }
 
-export default function BookTourPage({ params }: PageProps) {
+export default function BookTourPage({ params }: BookTourPageProps) {
   const router = useRouter()
   const [formData, setFormData] = useState({
     date: '',
@@ -22,16 +20,28 @@ export default function BookTourPage({ params }: PageProps) {
   })
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value })
+    setFormData(prevData => ({
+      ...prevData, 
+      [e.target.name]: e.target.value
+    }))
   }
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
-    // Here you would typically send the booking request to your backend
-    console.log('Booking submitted:', { ...formData, propertyId: params.propertyId })
-    toast.success('Tour booking request submitted successfully!')
-    // Redirect to bookings page
-    router.push('/bookings')
+    
+    try {
+      // Here you would typically send the booking request to your backend
+      console.log('Booking submitted:', { ...formData, propertyId: params.propertyId })
+      
+      // Simulating an async operation
+      // await submitBooking({ ...formData, propertyId: params.propertyId })
+      
+      toast.success('Tour booking request submitted successfully!')
+      router.push('/bookings')
+    } catch (error) {
+      toast.error('Failed to submit booking request')
+      console.error(error)
+    }
   }
 
   return (
@@ -67,7 +77,10 @@ export default function BookTourPage({ params }: PageProps) {
                   className="mt-1"
                 />
               </div>
-              <Button type="submit" className="w-full bg-orange-500 hover:bg-orange-600 text-white font-bold py-2 px-4 rounded-full text-lg">
+              <Button 
+                type="submit" 
+                className="w-full bg-orange-500 hover:bg-orange-600 text-white font-bold py-2 px-4 rounded-full text-lg"
+              >
                 Submit Booking Request
               </Button>
             </form>
@@ -77,4 +90,3 @@ export default function BookTourPage({ params }: PageProps) {
     </div>
   )
 }
-
