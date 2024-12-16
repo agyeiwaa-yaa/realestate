@@ -15,7 +15,15 @@ const property = {
   image: "/placeholder.svg?height=600&width=800"
 }
 
-export default function BuyPropertyPage({ params }: { params: { id: string } }) {
+
+
+type PageProps = {
+  params: {
+    bookingId: string
+  }
+}
+
+export default function BuyPropertyPage({ params }: PageProps) {
   const router = useRouter()
   const [formData, setFormData] = useState({
     fullName: '',
@@ -34,7 +42,6 @@ export default function BuyPropertyPage({ params }: { params: { id: string } }) 
     console.log('Purchase request submitted:', formData)
     toast.success('Purchase request submitted successfully!')
     // Redirect to payment page
-    router.push(`/payment/${params.id}`)
   }
 
   return (

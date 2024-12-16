@@ -6,12 +6,13 @@ import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { toast } from 'sonner'
 
-export interface PageProps {
-  params: { propertyId: string }
-  searchParams: { [key: string]: string | string[] | undefined }
+type PageProps = {
+  params: {
+    propertyId: string
+  }
 }
 
-export default function BookTourPage({ params, searchParams }: PageProps) {
+export default function BookTourPage({ params }: PageProps) {
   const router = useRouter()
   const [formData, setFormData] = useState({
     date: '',
@@ -34,9 +35,6 @@ export default function BookTourPage({ params, searchParams }: PageProps) {
         ...formData, 
         propertyId: params.propertyId 
       })
-      
-      // Simulating an async operation
-      // await submitBooking({ ...formData, propertyId: params.propertyId })
       
       toast.success('Tour booking request submitted successfully!')
       router.push('/bookings')

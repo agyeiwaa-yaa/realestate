@@ -6,7 +6,14 @@ import { Input } from "@/components/ui/input"
 import { toast } from 'sonner'
 import Image from 'next/image'
 
-export default function PaymentPage({ params }: { params: { id: string } }) {
+type PageProps = {
+  params: {
+    propertyId: string
+    reviewId: string
+  }
+}
+
+export default function PaymentPage({ params }: PageProps) {
   const [formData, setFormData] = useState({
     fullName: '',
     email: '',
@@ -50,7 +57,7 @@ export default function PaymentPage({ params }: { params: { id: string } }) {
             <div className="md:w-1/2 p-6">
               <div className="mb-6">
                 <h1 className="text-3xl font-bold text-gray-800">Payment Details</h1>
-                <p className="text-gray-600">Complete your purchase for property ID: {params.id}</p>
+                <p className="text-gray-600">Complete your purchase for property ID:</p>
               </div>
               <form onSubmit={handleSubmit} className="space-y-4">
                 <div>

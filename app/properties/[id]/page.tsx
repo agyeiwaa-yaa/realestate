@@ -27,7 +27,13 @@ const property = {
   ]
 }
 
-export default function PropertyPage({ params }: { params: { id: string } }) {
+type PageProps = {
+  params: {
+    propertyId: string
+  }
+}
+
+export default function EditPropertyPage({ params }: PageProps) {
   const [isFavorite, setIsFavorite] = useState(false)
 
   const toggleFavorite = () => {
