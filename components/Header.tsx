@@ -1,47 +1,23 @@
 'use client'
 
-import { useState, useEffect } from 'react'
 import Link from 'next/link'
-import Image from 'next/image'
 import { Button } from "@/components/ui/button"
-import { CalendarDays, User, LogOut } from 'lucide-react'
+import { CalendarDays, User, LogOut, ChevronDown } from 'lucide-react'
 import { useRouter } from 'next/navigation'
-
-// Mock authentication state
-const useAuth = () => {
-  const [isLoggedIn, setIsLoggedIn] = useState(false)
-  const [user, setUser] = useState({ name: 'John Doe', role: 'user' })
-
-  useEffect(() => {
-    // Here you would typically check for a session or token
-    const checkAuth = async () => {
-      // Mock authentication check
-      const loggedIn = localStorage.getItem('isLoggedIn') === 'true'
-      setIsLoggedIn(loggedIn)
-      if (loggedIn) {
-        setUser({ name: 'John Doe', role: 'user' })
-      }
-    }
-    checkAuth()
-  }, [])
-
-  const login = () => {
-    localStorage.setItem('isLoggedIn', 'true')
-    setIsLoggedIn(true)
-    setUser({ name: 'John Doe', role: 'user' })
-  }
-
-  const logout = () => {
-    localStorage.removeItem('isLoggedIn')
-    setIsLoggedIn(false)
-  }
-
-  return { isLoggedIn, user, login, logout }
-}
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu"
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
+import { useAuth } from '@/hooks/auth-context'
 
 export function Header() {
-  const { isLoggedIn, user, logout } = useAuth()
-  const router = useRouter()
+  const { user, logout } = useAuth()
+  const router = useRouter();
+  console.log(user)
 
   const handleLogout = () => {
     logout()
@@ -59,7 +35,7 @@ export function Header() {
             <Link href="/properties" className="text-gray-600 hover:text-orange-500">Properties</Link>
             <Link href="/agents" className="text-gray-600 hover:text-orange-500">Agents</Link>
             <Link href="/about" className="text-gray-600 hover:text-orange-500">About</Link>
-            {isLoggedIn && (
+            {user && (
               <Link href="/bookings" className="text-gray-600 hover:text-orange-500 flex items-center">
                 <CalendarDays className="mr-1" size={18} />
                 Bookings
@@ -68,33 +44,46 @@ export function Header() {
             <Link href="/contact" className="text-gray-600 hover:text-orange-500">Contact</Link>
           </nav>
           <div className="flex items-center space-x-2">
-            {isLoggedIn ? (
-              <div className="relative group">
-                <Button variant="ghost" className="flex items-center space-x-2">
-                  <Image
-                    src="/placeholder.svg?height=32&width=32"
-                    alt="User"
-                    width={32}
-                    height={32}
-                    className="rounded-full"
-                  />
-                  <span>{user?.name}</span>
-                </Button>
-                <div className="absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg py-1 z-10 hidden group-hover:block">
-                  <Link href="/profile-settings" className="block px-4 py-2 text-sm text-gray-700 hover:bg-orange-100">
-                    Profile Settings
-                  </Link>
-                  <button onClick={handleLogout} className="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-orange-100">
-                    Logout
-                  </button>
-                </div>
-              </div>
+            {user ? (
+              <DropdownMenu>
+                <DropdownMenuTrigger asChild>
+                  <Button variant="ghost" className="flex items-center space-x-2 bg-orange-100 hover:bg-orange-200 text-orange-800 rounded-full px-4 py-2">
+                    <Avatar className="h-8 w-8">
+                      <AvatarImage src={user.imageUrl || "/placeholder.svg?height=32&width=32"} alt={user.name} />
+                      <AvatarFallback>{user.name?.charAt(0)}</AvatarFallback>
+                    </Avatar>
+                    <span className="font-medium">{user.name}</span>
+                    <ChevronDown size={16} />
+                  </Button>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent align="end" className="w-56 bg-white rounded-lg shadow-lg border border-gray-200">
+                  <DropdownMenuItem asChild className="hover:bg-orange-100">
+                    <Link href="/profile-settings" className="flex items-center px-4 py-2">
+                      <User className="mr-2 h-4 w-4 text-orange-500" />
+                      <span>Profile Settings</span>
+                    </Link>
+                  </DropdownMenuItem>
+                  <DropdownMenuItem asChild className="hover:bg-orange-100">
+                    <Link href="/bookings" className="flex items-center px-4 py-2">
+                      <CalendarDays className="mr-2 h-4 w-4 text-orange-500" />
+                      <span>Bookings</span>
+                    </Link>
+                  </DropdownMenuItem>
+                  <DropdownMenuSeparator className="my-1 border-t border-gray-200" />
+                  <DropdownMenuItem onClick={handleLogout} className="hover:bg-orange-100">
+                    <div className="flex items-center px-4 py-2">
+                      <LogOut className="mr-2 h-4 w-4 text-orange-500" />
+                      <span>Log out</span>
+                    </div>
+                  </DropdownMenuItem>
+                </DropdownMenuContent>
+              </DropdownMenu>
             ) : (
               <>
-                <Button asChild variant="ghost">
+                <Button asChild variant="ghost" className="text-gray-600 hover:text-orange-500">
                   <Link href="/login">Login</Link>
                 </Button>
-                <Button asChild>
+                <Button asChild className="bg-orange-500 hover:bg-orange-600 text-white">
                   <Link href="/signup">Sign Up</Link>
                 </Button>
               </>

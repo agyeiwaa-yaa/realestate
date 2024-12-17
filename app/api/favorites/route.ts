@@ -40,17 +40,35 @@ export async function POST(req: NextRequest) {
     const { propertyId } = await req.json();
 
     const result = await withConnection(async (connection) => {
-      const [result] = await connection.execute(
-        'INSERT INTO Favorites (user_id, property_id) VALUES (?, ?)',
+      // Check if already favorited
+      const [existing] = await connection.execute(
+        'SELECT * FROM Favorites WHERE user_id = ? AND property_id = ?',
         [auth.userId, propertyId]
       );
-      return result;
+
+      if (Array.isArray(existing) && existing.length > 0) {
+        // Remove favorite if it exists
+        await connection.execute(
+          'DELETE FROM Favorites WHERE user_id = ? AND property_id = ?',
+          [auth.userId, propertyId]
+        );
+        return { action: 'removed' };
+      } else {
+        // Add new favorite
+        await connection.execute(
+          'INSERT INTO Favorites (user_id, property_id) VALUES (?, ?)',
+          [auth.userId, propertyId]
+        );
+        return { action: 'added' };
+      }
     });
 
-    return NextResponse.json({ message: "Property added to favorites" }, { status: 201 });
+    return NextResponse.json({ 
+      message: result.action === 'added' ? "Added to favorites" : "Removed from favorites" 
+    }, { status: 200 });
   } catch (error) {
     return NextResponse.json(
-      { error: "Failed to add to favorites" },
+      { error: "Failed to update favorites" },
       { status: 500 }
     );
   }
