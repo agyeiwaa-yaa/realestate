@@ -13,7 +13,6 @@ export default function PropertyPage() {
   const params = useParams()
   const { properties, loading, fetchProperties, getPropertyById } = useProperties()
   const { handleBooking, handleFavorite, isPropertyFavorited } = usePropertyActions()
-  const user = JSON.parse(localStorage.getItem('user'));
 
   useEffect(() => {
     fetchProperties()

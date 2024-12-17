@@ -10,7 +10,7 @@ export function usePropertyActions() {
   const { addToFavorites, favorites, fetchFavorites } = useFavorites()
   const router = useRouter()
 
-  const handleBooking = async (propertyId: number, agentId: number) => {
+  const handleBooking = async (propertyId: any, agentId: any) => {
     if (!user) {
       toast.error('Please login to book a property')
       router.push('/login')
@@ -34,7 +34,7 @@ export function usePropertyActions() {
     }
   }
 
-  const handleFavorite = async (propertyId: number) =>  {
+  const handleFavorite = async (propertyId: any) =>  {
     if (!user) {
       toast.error('Please login to save favorites')
       router.push('/login')
